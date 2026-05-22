@@ -15,7 +15,7 @@ while True:
         print("Nome Inválido!")
 
 tamanho = (1000,700)
-pygame.display.set_caption("Último Sobrevivente")
+pygame.display.set_caption("O último Sobrevivente")
 icone  = pygame.image.load("bases/icone.png")
 pygame.display.set_icon(icone)
 relogio = pygame.time.Clock()
