@@ -1,6 +1,7 @@
 import pygame
 import random
-from recursos.funcoes import inicializarBancoDeDados, limpar_tela, escreverDados, maior_pontuador, mostrar_vida
+from recursos.funcoes import inicializarBancoDeDados, limpar_tela, escreverDados, maior_pontuador
+from recursos.trabalho import mostrar_vida
 
 limpar_tela()
 inicializarBancoDeDados()
@@ -105,7 +106,6 @@ def jogar():
             fundoMov1 = 1129
         elif fundoMov2 <= -1129:
             fundoMov2 = 1129
-        
         
         tela.blit(iron, (posicaoXPersona,posicaoYPersona))
         tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
