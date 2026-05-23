@@ -98,8 +98,8 @@ def jogar():
             posicaoYMissel = random.randint(0,200)
                             
         tela.fill(branco)
-        tela.blit(fundo, (fundoMov1,0) )
-        tela.blit(fundo, (fundoMov2,0) )
+        escrever_tela(fundo, (fundoMov1,0) )
+        escrever_tela(fundo, (fundoMov2,0) )
         fundoMov1 -= 1
         fundoMov2 -= 1
         if fundoMov1 <= -1129:
@@ -107,10 +107,10 @@ def jogar():
         elif fundoMov2 <= -1129:
             fundoMov2 = 1129
         
-        tela.blit(iron, (posicaoXPersona,posicaoYPersona))
-        tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
+        escrever_tela(iron, (posicaoXPersona,posicaoYPersona))
+        escrever_tela( missel, (posicaoXMissel, posicaoYMissel) )
         texto = fonteMenu.render("Pontos: "+str(pontos), True, branco)
-        tela.blit(texto, (700,15))
+        escrever_tela(texto, (700,15))
         mostrar_vida(tela,fonteMenu,vida,branco)
         pixelsPersonaX = list(range(posicaoXPersona, posicaoXPersona+116))
         pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona+51))
@@ -155,15 +155,16 @@ def dead():
                     jogar()
             
         tela.fill(branco)
-        tela.blit(fundoDead, (0,0))
+        escrever_tela(fundoDead, (0,0))
         startButton = pygame.draw.rect(tela, branco, (10,10, larguraButtonStart, alturaButtonStart), border_radius=15)
         startTexto = fonteMenu.render("Iniciar Game", True, preto)
-        tela.blit(startTexto, (25,12))
+        escrever_tela(startTexto, (25,12))
 
         pygame.display.update()
         relogio.tick(60)
 
-
+def escrever_tela(mensagem,posicao):
+    tela.blit(mensagem,posicao)
 def start():
     larguraButtonStart = 150
     alturaButtonStart  = 40
@@ -185,24 +186,43 @@ def start():
                     jogar()
 
         tela.fill(branco)
-        tela.blit(fundoStart, (0,0))
+        escrever_tela(fundoStart, (0,0))
 
         fonteTitulo=pygame.font.SysFont("comicsans",40)
         textoTitulo=fonteTitulo.render("O Último Sobrevivente",True,branco)
         tituloX=500-textoTitulo.get_width()//2
-        tela.blit(textoTitulo,(tituloX,50))
+        escrever_tela(textoTitulo,(tituloX,50))
         
         textoBoasVindas=fonteMenu.render(f"Bem vindo(a) {nome}",True, branco)
         boasVindasX=500-textoBoasVindas.get_width()//2
-        tela.blit(textoBoasVindas,(boasVindasX,130))
+        escrever_tela(textoBoasVindas,(boasVindasX,130))
 
-        startButton = pygame.draw.rect(tela, branco, (425,300, larguraButtonStart, alturaButtonStart), border_radius=15)
+        textoDescricaoGame=fonteMenu.render("Sobreviva aos Zumbis o máximo possível",True,branco)
+        textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(textoDescricaoGame,(textoDescricaoX,200))
+        
+        textoDescricaoGame=fonteMenu.render("Desvie dos inimigos e tente bater o recorde do último jogador!",True,branco)
+        textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(textoDescricaoGame,(textoDescricaoX,250))
+
+        
+        textoDescricaoGame=fonteMenu.render("Recorde: ",True,branco)
+        textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(textoDescricaoGame,(textoDescricaoX,290))
+        
+        textoDescricaoGame=fonteMenu.render(f"jogador: {nome_maior} - pontos: {maior_pontos}",True,branco)
+        textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(textoDescricaoGame,(textoDescricaoX,320))
+
+        
+        textoDescricaoGame=fonteMenu.render(f"{dataJogada}",True,branco)
+        textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(textoDescricaoGame,(textoDescricaoX,350))
+
+        startButton = pygame.draw.rect(tela, branco, (425,402, larguraButtonStart, alturaButtonStart), border_radius=15)
         startTexto = fonteMenu.render("Iniciar Game", True, preto)
         textoX=500-startTexto.get_width()//2
-        tela.blit(startTexto, (textoX,302))
-
-        texto = fonteMenu.render(f"The Best - {nome_maior} - {maior_pontos} - { dataJogada} ", True, branco)
-        tela.blit(texto, (480,15))  
+        escrever_tela(startTexto, (textoX,402))
         
         pygame.display.update()
         relogio.tick(60)

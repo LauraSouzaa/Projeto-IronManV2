@@ -2,11 +2,6 @@ import os, time
 import json
 from datetime import datetime
 
-
-def mostrar_vida(tela,fonte,vida,cor):
-    textoVida=fonte.render("Vida: "+ str(vida), True, cor)
-    tela.blit(textoVida,(50,15))
-
 def limpar_tela():
     os.system("cls")
     
@@ -31,7 +26,7 @@ def escreverDados(nome, pontos):
     else:
         dadosDict = {}
         
-    data_br = datetime.now().strftime("%d/%m/%Y")
+    data_br = datetime.now().strftime("%d/%m/%Y %H:%M")
     dadosDict[nome] = (pontos, data_br)
     
     banco = open("base.atitus","w")
@@ -63,3 +58,4 @@ def maior_pontuador():
             dataJogada = info[1]            
 
     return nome_maior, maior_pontos, dataJogada
+
