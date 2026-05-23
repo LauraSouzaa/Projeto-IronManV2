@@ -2,6 +2,11 @@ import os, time
 import json
 from datetime import datetime
 
+
+def mostrar_vida(tela,fonte,vida,cor):
+    textoVida=fonte.render("Vida: "+ str(vida), True, cor)
+    tela.blit(textoVida,(50,15))
+
 def limpar_tela():
     os.system("cls")
     

@@ -1,6 +1,6 @@
 import pygame
 import random
-from recursos.funcoes import inicializarBancoDeDados, limpar_tela, escreverDados, maior_pontuador
+from recursos.funcoes import inicializarBancoDeDados, limpar_tela, escreverDados, maior_pontuador, mostrar_vida
 
 limpar_tela()
 inicializarBancoDeDados()
@@ -38,6 +38,7 @@ pygame.mixer.music.load("bases/ironsound.mp3")
 fonteMenu = pygame.font.SysFont("comicsans",18)
 
 def jogar():
+    vida=3
     fundoMov1 = 0
     fundoMov2 = 1129
     posicaoXPersona = 0
@@ -110,16 +111,19 @@ def jogar():
         tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
         texto = fonteMenu.render("Pontos: "+str(pontos), True, branco)
         tela.blit(texto, (700,15))
-            
+        mostrar_vida(tela,fonteMenu,vida,branco)
         pixelsPersonaX = list(range(posicaoXPersona, posicaoXPersona+116))
         pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona+51))
         pixelsMisselX = list(range(posicaoXMissel, posicaoXMissel + 125))
         pixelsMisselY = list(range(posicaoYMissel, posicaoYMissel + 25))
         if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
             if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
-                escreverDados(nome, pontos)
+                vida-=1
+                posicaoXMissel=800
+                posicaoYMissel=(random.randint(0,200))
+            if vida <=0:
+                escreverDados(nome,pontos)
                 dead()
-                
             else:
                 print("Ainda Vivo, mas por pouco!")
         else:
