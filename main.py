@@ -26,7 +26,7 @@ preto = (0, 0, 0)
 
 fundo = pygame.image.load("bases/background.jpg")
 fundoDead = pygame.image.load("bases/backgroundDead.jpg")
-fundoStart = pygame.image.load("bases/backgroundStart.jpg")
+fundoStart = pygame.image.load("bases/backgroundStart.webp")
 fundoStart=pygame.transform.scale(fundoStart,(1000,700))
 
 iron = pygame.image.load("bases/IronMan.png")
@@ -165,6 +165,7 @@ def dead():
 
 def escrever_tela(mensagem,posicao):
     tela.blit(mensagem,posicao)
+
 def start():
     larguraButtonStart = 150
     alturaButtonStart  = 40
@@ -215,7 +216,7 @@ def start():
         escrever_tela(textoDescricaoGame,(textoDescricaoX,320))
 
         
-        textoDescricaoGame=fonteMenu.render(f"{dataJogada}",True,branco)
+        textoDescricaoGame=fonteMenu.render(f"{dataJogada} ",True,branco)
         textoDescricaoX=500-textoDescricaoGame.get_width()//2
         escrever_tela(textoDescricaoGame,(textoDescricaoX,350))
 
