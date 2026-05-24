@@ -31,13 +31,13 @@ fundoDead = pygame.image.load("bases/backgroundDead.jpg")
 fundoStart = pygame.image.load("bases/backgroundStart.webp")
 fundoStart=pygame.transform.scale(fundoStart,(1000,700))
 
-iron = pygame.image.load("bases/IronMan.png")
-iron = pygame.transform.scale(iron, (116,51))
-missel = pygame.image.load("bases/missile.png")
-missel = pygame.transform.scale(missel, (125,25))
-missileSound = pygame.mixer.Sound("bases/missile.wav")
+personagem= pygame.image.load("bases/personagem.png")
+personagem = pygame.transform.scale(personagem, (180,180))
+zombie = pygame.image.load("bases/zombie.png")
+zombieposicaoXzombie = pygame.transform.scale(zombie, (100,100))
+zombieSound = pygame.mixer.Sound("bases/audioZombie.mp3")
 explosaoSound = pygame.mixer.Sound("bases/explosao.wav")
-pygame.mixer.music.load("bases/ironsound.mp3")
+pygame.mixer.music.load("bases/audioApocalypse.mp3")
 fonteMenu = pygame.font.SysFont("comicsans",18)
 
 def jogar():
@@ -49,11 +49,11 @@ def jogar():
     movimentoXPersona  = 0
     movimentoYPersona  = 0
     velocidadeMovPersona = 5
-    posicaoXMissel = 800
-    posicaoYMissel = 100
-    velocidadeMissel = 2
+    posicaoXzombie = 800
+    posicaoYzombieposicaoXzombie = 100
+    velocidadezombieposicaoXzombie = 2
     pontos = 0
-    pygame.mixer.Sound.play(missileSound)
+    pygame.mixer.Sound.play(zombieSound)
     pygame.mixer.music.play(-1)
     dificuldade = 20
     while True:
@@ -91,33 +91,33 @@ def jogar():
             posicaoYPersona = 150
             
             
-        posicaoXMissel = posicaoXMissel - velocidadeMissel
-        if posicaoXMissel < -125:
-            pygame.mixer.Sound.play(missileSound)
-            posicaoXMissel = 800
+        posicaoXzombie = posicaoXzombie - velocidadezombieposicaoXzombie
+        if posicaoXzombie < -125:
+            pygame.mixer.Sound.play(zombieSound)
+            posicaoXzombie = 800
             pontos = pontos + 1
-            velocidadeMissel = velocidadeMissel + 1
-            posicaoYMissel = random.randint(0,200)
+            velocidadezombieposicaoXzombie = velocidadezombieposicaoXzombie + 1
+            posicaoYzombieposicaoXzombie = random.randint(0,200)
                             
         tela.fill(branco)
         escrever_tela(fundo,(0,0))
         if personagemPiscando==False or contadorPisca%6<3:
-            escrever_tela(iron, (posicaoXPersona,posicaoYPersona))
-        escrever_tela( missel, (posicaoXMissel, posicaoYMissel) )
+            escrever_tela(personagem, (posicaoXPersona,posicaoYPersona))
+        escrever_tela( zombieposicaoXzombie, (posicaoXzombie, posicaoYzombieposicaoXzombie) )
         texto = fonteMenu.render("Pontos: "+str(pontos), True, branco)
         escrever_tela(texto, (700,15))
         mostrar_vida(tela,fonteMenu,vida,branco)
-        pixelsPersonaX = list(range(posicaoXPersona, posicaoXPersona+116))
-        pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona+51))
-        pixelsMisselX = list(range(posicaoXMissel, posicaoXMissel + 125))
-        pixelsMisselY = list(range(posicaoYMissel, posicaoYMissel + 25))
-        if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
-            if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade and personagemPiscando==False:
+        pixelsPersonaX = list(range(posicaoXPersona, posicaoXPersona+140))
+        pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona+140))
+        pixelszombieposicaoXzombieX = list(range(posicaoXzombie, posicaoXzombie + 125))
+        pixelszombieposicaoXzombieY = list(range(posicaoYzombieposicaoXzombie, posicaoYzombieposicaoXzombie + 25))
+        if  len( list( set(pixelszombieposicaoXzombieY).intersection(set(pixelsPersonaY))) ) > dificuldade:
+            if len( list( set(pixelszombieposicaoXzombieX).intersection(set(pixelsPersonaX))   ) )  > dificuldade and personagemPiscando==False:
                 vida-=1
                 personagemPiscando=True
                 contadorPisca=50
-                posicaoXMissel=800
-                posicaoYMissel=(random.randint(0,200))
+                posicaoXzombie=800
+                posicaoYzombieposicaoXzombie=(random.randint(0,200))
             if vida <=0:
                 escreverDados(nome,pontos)
                 dead()
