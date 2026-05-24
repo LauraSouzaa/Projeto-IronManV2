@@ -49,7 +49,6 @@ def maior_pontuador():
     maior_pontos = -1
 
     for nome, info in dadosDict.items():
-
         pontos = info[0]
         
         if pontos > maior_pontos:
@@ -59,3 +58,8 @@ def maior_pontuador():
 
     return nome_maior, maior_pontos, dataJogada
 
+def cor_texto(nomeCor):
+    if nomeCor=="branco":
+        return (255, 255, 255)
+    if nomeCor=="preto":
+        return (0, 0, 0)

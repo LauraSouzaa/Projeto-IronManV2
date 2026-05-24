@@ -1,6 +1,6 @@
 import pygame
 import random
-from recursos.funcoes import inicializarBancoDeDados, limpar_tela, escreverDados, maior_pontuador
+from recursos.funcoes import inicializarBancoDeDados, limpar_tela, escreverDados, maior_pontuador,cor_texto
 from recursos.trabalho import mostrar_vida
 
 limpar_tela()
@@ -21,10 +21,12 @@ icone  = pygame.image.load("bases/icone.png")
 pygame.display.set_icon(icone)
 relogio = pygame.time.Clock()
 tela = pygame.display.set_mode( tamanho ) 
-branco = (255, 255, 255)
-preto = (0, 0, 0)
+branco=cor_texto("branco")
+preto=cor_texto("preto")
 
-fundo = pygame.image.load("bases/background.jpg")
+fundo = pygame.image.load("bases/background.webp")
+fundo=pygame.transform.scale(fundo,(1000,700))
+larguraFundo=fundo.get_width()
 fundoDead = pygame.image.load("bases/backgroundDead.jpg")
 fundoStart = pygame.image.load("bases/backgroundStart.webp")
 fundoStart=pygame.transform.scale(fundoStart,(1000,700))
@@ -39,9 +41,9 @@ pygame.mixer.music.load("bases/ironsound.mp3")
 fonteMenu = pygame.font.SysFont("comicsans",18)
 
 def jogar():
+    personagemPiscando=False
+    contadorPisca=0
     vida=3
-    fundoMov1 = 0
-    fundoMov2 = 1129
     posicaoXPersona = 0
     posicaoYPersona = 60
     movimentoXPersona  = 0
@@ -98,16 +100,9 @@ def jogar():
             posicaoYMissel = random.randint(0,200)
                             
         tela.fill(branco)
-        escrever_tela(fundo, (fundoMov1,0) )
-        escrever_tela(fundo, (fundoMov2,0) )
-        fundoMov1 -= 1
-        fundoMov2 -= 1
-        if fundoMov1 <= -1129:
-            fundoMov1 = 1129
-        elif fundoMov2 <= -1129:
-            fundoMov2 = 1129
-        
-        escrever_tela(iron, (posicaoXPersona,posicaoYPersona))
+        escrever_tela(fundo,(0,0))
+        if personagemPiscando==False or contadorPisca%6<3:
+            escrever_tela(iron, (posicaoXPersona,posicaoYPersona))
         escrever_tela( missel, (posicaoXMissel, posicaoYMissel) )
         texto = fonteMenu.render("Pontos: "+str(pontos), True, branco)
         escrever_tela(texto, (700,15))
@@ -117,8 +112,10 @@ def jogar():
         pixelsMisselX = list(range(posicaoXMissel, posicaoXMissel + 125))
         pixelsMisselY = list(range(posicaoYMissel, posicaoYMissel + 25))
         if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
-            if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
+            if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade and personagemPiscando==False:
                 vida-=1
+                personagemPiscando=True
+                contadorPisca=50
                 posicaoXMissel=800
                 posicaoYMissel=(random.randint(0,200))
             if vida <=0:
@@ -128,7 +125,10 @@ def jogar():
                 print("Ainda Vivo, mas por pouco!")
         else:
             print("Ainda Vivo")
-        
+        if personagemPiscando:
+            contadorPisca-=1
+            if contadorPisca<=0:
+                personagemPiscando=False
         pygame.display.update()
         relogio.tick(60)
 
