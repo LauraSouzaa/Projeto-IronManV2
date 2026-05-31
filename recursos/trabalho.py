@@ -1,3 +1,6 @@
 def mostrar_vida(tela,fonte,vida,cor):
-    textoVida=fonte.render("Vidas: "+ str(vida), True, cor)
-    tela.blit(textoVida,(20,20))
+    sombraVida=fonte.render(f"Vidas: {vida}", True, (0,0,0))
+    tela.blit(sombraVida,(12,42))
+
+    textoVida=fonte.render(f"Vidas: {vida}", True, cor)
+    tela.blit(textoVida,(10,40))
