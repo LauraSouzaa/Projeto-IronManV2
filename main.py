@@ -175,6 +175,10 @@ def escrever_tela(mensagem,posicao):
     tela.blit(mensagem,posicao)
 
 def start():
+    global nome_maior, maior_pontos, dataJogada
+    nome_maior, maior_pontos, dataJogada = maior_pontuador()
+    larguraButtonStart = 150
+    alturaButtonStart  = 40
     larguraButtonStart = 150
     alturaButtonStart  = 40
     while True:
