@@ -7,7 +7,8 @@ limpar_tela()
 inicializarBancoDeDados()
 nome_maior, maior_pontos, dataJogada = maior_pontuador()
 pygame.init()
-
+sol=40
+velocidadeSol=0.1
 while True:
     nome = input("NickName: ")
     if len(nome) > 0: 
@@ -43,6 +44,7 @@ pygame.mixer.music.load("bases/narutoAudio.mp3")
 fonteMenu = pygame.font.SysFont("comicsans",18)
 
 def jogar():
+    global sol,velocidadeSol
     pause=False
     velocidadeMovPersona = 8
     posicaoXpain = 800
@@ -62,6 +64,9 @@ def jogar():
     pygame.mixer.music.play(-1)
     dificuldade = 20
     while True:
+        sol+=velocidadeSol
+        if sol>=50 or sol<=40:
+            velocidadeSol*=-1
         for evento in pygame.event.get():
             if evento.type==pygame.KEYDOWN and evento.key==pygame.K_SPACE:
                 pause=not pause
@@ -96,6 +101,7 @@ def jogar():
             posicaoNuvemY = random.randint(50,200)
         tela.fill(branco)
         escrever_tela(fundo,(0,0))
+        pygame.draw.circle(tela,(255,255,0),(920,80),int(sol))
         escrever_tela(nuvem, (posicaoNuvemX, posicaoNuvemY))
         if personagemPiscando==False or contadorPisca%6<3:
             escrever_tela(personagem, (100,posicaoYPersona))
@@ -142,6 +148,7 @@ def dead():
     pygame.mixer.music.stop()
     painSound.stop()
     pygame.mixer.Sound.play(explosaoSound)
+    nome_maior, maior_pontos, dataJogada = maior_pontuador()
     larguraButtonStart = 150
     alturaButtonStart  = 40
     while True:
@@ -163,6 +170,11 @@ def dead():
             
         tela.fill(branco)
         escrever_tela(fundoDead, (0,0))
+        textoRecorde = fonteMenu.render(f"Maior pontuador: {nome_maior} - {maior_pontos} pontos",True,branco)
+        sombraRecorde=fonteMenu.render(f"Maior pontuador: {nome_maior} - {maior_pontos} pontos", True,preto)
+        textoX = 500 - textoRecorde.get_width() // 2
+        escrever_tela(sombraRecorde,(textoX+2, 202))
+        escrever_tela(textoRecorde,(textoX, 200))
         startButton = pygame.draw.rect(tela, branco, (425,620, larguraButtonStart, alturaButtonStart), border_radius=15)
         startTexto = fonteMenu.render("Iniciar Game", True, preto)
         textoX=500-startTexto.get_width()//2
@@ -201,41 +213,53 @@ def start():
         escrever_tela(fundoStart, (0,0))
 
         fonteTitulo=pygame.font.SysFont("comicsans",40)
+        sombraTitulo = fonteTitulo.render("Naruto: Sobrevivência Ninja", True, preto)
         textoTitulo=fonteTitulo.render("Naruto: Sobrevivência Ninja",True,branco)
         tituloX=500-textoTitulo.get_width()//2
+        escrever_tela(sombraTitulo,(tituloX+2,52))
         escrever_tela(textoTitulo,(tituloX,50))
         
         textoBoasVindas=fonteMenu.render(f"Bem vindo(a) {nome}",True, branco)
+        sombraBoasVindas = fonteMenu.render(f"Bem vindo(a) {nome}", True, preto)
         boasVindasX=500-textoBoasVindas.get_width()//2
+        escrever_tela(sombraBoasVindas, (boasVindasX+2,132))
         escrever_tela(textoBoasVindas,(boasVindasX,130))
 
         textoDescricaoGame=fonteMenu.render("Sobreviva aos ataques da Akatsuki e bata o recorde.",True,branco)
+        sombraDescricaoGame = fonteMenu.render("Sobreviva aos ataques da Akatsuki e bata o recorde.",True,preto)
         textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(sombraDescricaoGame, (textoDescricaoX+2,202))
         escrever_tela(textoDescricaoGame,(textoDescricaoX,200))
         
         textoDescricaoGame=fonteMenu.render("Desvie dos inimigos e tente bater o recorde do último jogador!",True,branco)
+        sombraDescricaoGame = fonteMenu.render("Desvie dos inimigos e tente bater o recorde do último jogador!",True,preto)
         textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(sombraDescricaoGame, (textoDescricaoX+2,252))
         escrever_tela(textoDescricaoGame,(textoDescricaoX,250))
 
         
         textoDescricaoGame=fonteMenu.render("Recorde: ",True,branco)
+        sombraDescricaoGame = fonteMenu.render("Recorde: ",True,preto)
         textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(sombraDescricaoGame, (textoDescricaoX+2,292))
         escrever_tela(textoDescricaoGame,(textoDescricaoX,290))
         
         textoDescricaoGame=fonteMenu.render(f"jogador: {nome_maior} - pontos: {maior_pontos}",True,branco)
+        sombraDescricaoGame = fonteMenu.render(f"jogador: {nome_maior} - pontos: {maior_pontos}",True,preto)
         textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(sombraDescricaoGame, (textoDescricaoX+2,320))
         escrever_tela(textoDescricaoGame,(textoDescricaoX,320))
 
-        
-        textoDescricaoGame=fonteMenu.render(f"{dataJogada} ",True,branco)
+        textoDescricaoGame=fonteMenu.render(f"{dataJogada}",True,branco)
+        sombraDescricaoGame = fonteMenu.render(f"{dataJogada}",True,preto)
         textoDescricaoX=500-textoDescricaoGame.get_width()//2
+        escrever_tela(sombraDescricaoGame, (textoDescricaoX+2,352))
         escrever_tela(textoDescricaoGame,(textoDescricaoX,350))
 
-        startButton = pygame.draw.rect(tela, branco, (425,402, larguraButtonStart, alturaButtonStart), border_radius=15)
+        startButton = pygame.draw.rect(tela, branco, (425,602, larguraButtonStart, alturaButtonStart), border_radius=15)
         startTexto = fonteMenu.render("Iniciar Game", True, preto)
         textoX=500-startTexto.get_width()//2
-        escrever_tela(startTexto, (textoX,402))
-        
+        escrever_tela(startTexto, (textoX,611))
         pygame.display.update()
         relogio.tick(60)
 
