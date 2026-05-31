@@ -26,7 +26,7 @@ def escreverDados(nome, pontos):
     else:
         dadosDict = {}
         
-    data_br = datetime.now().strftime("%d/%m/%Y %H:%M")
+    data_br = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     dadosDict[nome] = (pontos, data_br)
     
     banco = open("base.atitus","w")

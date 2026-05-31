@@ -201,7 +201,7 @@ def start():
         escrever_tela(fundoStart, (0,0))
 
         fonteTitulo=pygame.font.SysFont("comicsans",40)
-        textoTitulo=fonteTitulo.render("O Último Sobrevivente",True,branco)
+        textoTitulo=fonteTitulo.render("Naruto: Sobrevivência Ninja",True,branco)
         tituloX=500-textoTitulo.get_width()//2
         escrever_tela(textoTitulo,(tituloX,50))
         
@@ -209,7 +209,7 @@ def start():
         boasVindasX=500-textoBoasVindas.get_width()//2
         escrever_tela(textoBoasVindas,(boasVindasX,130))
 
-        textoDescricaoGame=fonteMenu.render("Sobreviva aos Zumbis o máximo possível",True,branco)
+        textoDescricaoGame=fonteMenu.render("Sobreviva aos ataques da Akatsuki e bata o recorde.",True,branco)
         textoDescricaoX=500-textoDescricaoGame.get_width()//2
         escrever_tela(textoDescricaoGame,(textoDescricaoX,200))
         
