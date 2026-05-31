@@ -1,5 +1,6 @@
 import pygame
 import random
+import pyttsx3
 from recursos.funcoes import inicializarBancoDeDados, limpar_tela, escreverDados, maior_pontuador,cor_texto
 from recursos.trabalho import mostrar_vida
 
@@ -7,6 +8,8 @@ limpar_tela()
 inicializarBancoDeDados()
 nome_maior, maior_pontos, dataJogada = maior_pontuador()
 pygame.init()
+engine=pyttsx3.init()
+engine.setProperty("rate",180)
 sol=40
 velocidadeSol=0.1
 while True:
@@ -68,9 +71,13 @@ def jogar():
         if sol>=50 or sol<=40:
             velocidadeSol*=-1
         for evento in pygame.event.get():
+            if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
+                pygame.quit()
+                quit()
             if evento.type==pygame.KEYDOWN and evento.key==pygame.K_SPACE:
                 pause=not pause
             if evento.type == pygame.QUIT:
+                pygame.quit()
                 quit()
             if not pause:
                 if evento.type == pygame.KEYDOWN and evento.key == pygame.K_UP:
@@ -153,6 +160,9 @@ def dead():
     alturaButtonStart  = 40
     while True:
         for evento in pygame.event.get():
+            if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
+                pygame.quit()
+                quit()
             if evento.type == pygame.QUIT:
                 quit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
@@ -167,9 +177,7 @@ def dead():
                     larguraButtonStart = 150
                     alturaButtonStart  = 40
                     jogar()
-            
         tela.fill(branco)
-        escrever_tela(fundoDead, (0,0))
         textoRecorde = fonteMenu.render(f"Maior pontuador: {nome_maior} - {maior_pontos} pontos",True,branco)
         sombraRecorde=fonteMenu.render(f"Maior pontuador: {nome_maior} - {maior_pontos} pontos", True,preto)
         textoX = 500 - textoRecorde.get_width() // 2
@@ -179,7 +187,7 @@ def dead():
         startTexto = fonteMenu.render("Iniciar Game", True, preto)
         textoX=500-startTexto.get_width()//2
         escrever_tela(startTexto, (textoX,624))
-
+        escrever_tela(fundoDead, (0,0))
         pygame.display.update()
         relogio.tick(60)
 
@@ -194,6 +202,9 @@ def start():
     alturaButtonStart  = 40
     while True:
         for evento in pygame.event.get():
+            if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
+                pygame.quit()
+                quit()
             if evento.type == pygame.QUIT:
                 quit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
@@ -262,5 +273,7 @@ def start():
         escrever_tela(startTexto, (textoX,611))
         pygame.display.update()
         relogio.tick(60)
+        engine.say(f"Bem vindo(a) {nome}")
+        engine.runAndWait()
 
 start()
