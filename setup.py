@@ -4,14 +4,15 @@ executaveis = [
                cx_Freeze.Executable(
                    script="main.py", 
                    icon="assets/icone.ico",
-                    target_name="IronManMarcao.exe"
+                    target_name="NarutoSobrevivencia.exe"
                    ) ]
 cx_Freeze.setup(
-    name = "Iron Man",
+    name = "Naruto Sobrevivencia Ninja",
+    description="Jogo de sobrevivência inspirado em Naruto",
     options={
         "build_exe":{
-            "packages":["pygame"],
-            "include_files":["assets","recursos"]
+            "packages":["pygame","pyttsx3"],
+            "include_files":["bases","recursos","log.dat"]
         }
     }, executables = executaveis
 )

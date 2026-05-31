@@ -15,7 +15,6 @@ def inicializarBancoDeDados():
     except:
         print("Banco de Dados Inexistente. Criando...")
         banco = open("log.dat","w")
-    
 def escreverDados(nome, pontos):
     # INI - inserindo no arquivo
     banco = open("log.dat","r")
@@ -25,10 +24,19 @@ def escreverDados(nome, pontos):
         dadosDict = json.loads(dados)
     else:
         dadosDict = {}
-        
+
     data_br = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    dadosDict[nome] = (pontos, data_br)
-    
+
+    if nome in dadosDict:
+        pontosAntigos=dadosDict[nome][0]
+        if pontos>pontosAntigos:
+            dadosDict[nome]=(pontos,data_br)
+    else:
+        dadosDict[nome]=(pontos,data_br)
+
+    print("Dados que serão gravados:")
+    print(dadosDict)
+
     banco = open("log.dat","w")
     banco.write(json.dumps(dadosDict))
     banco.close()
@@ -55,7 +63,6 @@ def maior_pontuador():
             maior_pontos = pontos
             nome_maior = nome
             dataJogada = info[1]            
-
     return nome_maior, maior_pontos, dataJogada
 
 def cor_texto(nomeCor):

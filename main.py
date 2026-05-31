@@ -10,6 +10,7 @@ nome_maior, maior_pontos, dataJogada = maior_pontuador()
 pygame.init()
 engine=pyttsx3.init()
 engine.setProperty("rate",180)
+engine.setProperty("volume", 1.0)
 sol=40
 velocidadeSol=0.1
 while True:
@@ -18,9 +19,8 @@ while True:
         break
     else:
         print("Nome Inválido!")
-
 tamanho = (1000,700)
-pygame.display.set_caption("O último Sobrevivente")
+pygame.display.set_caption("Naruto: Sobrevivência Ninja")
 icone  = pygame.image.load("bases/icone.png")
 pygame.display.set_icon(icone)
 relogio = pygame.time.Clock()
@@ -62,7 +62,6 @@ def jogar():
     vida=3
     posicaoYPersona = 320
     movimentoYPersona  = 0
-    velocidadeMovPersona = 5
     pontos = 0
     pygame.mixer.music.play(-1)
     dificuldade = 20
@@ -137,6 +136,7 @@ def jogar():
         if vida <= 0:
             escreverDados(nome,pontos)
             dead()
+            return
 
         if personagemPiscando:
             contadorPisca -= 1
@@ -152,18 +152,36 @@ def jogar():
         relogio.tick(60)
 
 def dead():
+    global engine
+    print("ENTROU NO DEAD")
+    pygame.mixer.Sound.play(explosaoSound)
     pygame.mixer.music.stop()
     painSound.stop()
-    pygame.mixer.Sound.play(explosaoSound)
-    nome_maior, maior_pontos, dataJogada = maior_pontuador()
+    pygame.time.wait(4000)
+    painSound.stop()
+    nome_maior, maior_pontos, _ = maior_pontuador()
+    print("RECORDE NA TELA FINAL:", nome_maior, maior_pontos)
     larguraButtonStart = 150
     alturaButtonStart  = 40
+    explosaoSound.stop()
+    engine.stop()
+    engine.say("Você foi derrotado pelo Pein")
+    engine.runAndWait()
     while True:
+        tela.fill(branco)
+        escrever_tela(fundoDead, (0,0))
+       
+        startButton = pygame.draw.rect(tela, branco, (425,620, larguraButtonStart, alturaButtonStart), border_radius=15)
+        startTexto = fonteMenu.render("Iniciar Game", True, preto)
+        textoX=425+larguraButtonStart// 2 - startTexto.get_width()//2
+        textoY = 620 + alturaButtonStart // 2 - startTexto.get_height() // 2
+        escrever_tela(startTexto, (textoX,textoY))
         for evento in pygame.event.get():
             if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
                 pygame.quit()
                 quit()
             if evento.type == pygame.QUIT:
+                pygame.quit()
                 quit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if startButton.collidepoint(evento.pos):
@@ -177,17 +195,12 @@ def dead():
                     larguraButtonStart = 150
                     alturaButtonStart  = 40
                     jogar()
-        tela.fill(branco)
+        
         textoRecorde = fonteMenu.render(f"Maior pontuador: {nome_maior} - {maior_pontos} pontos",True,branco)
         sombraRecorde=fonteMenu.render(f"Maior pontuador: {nome_maior} - {maior_pontos} pontos", True,preto)
         textoX = 500 - textoRecorde.get_width() // 2
         escrever_tela(sombraRecorde,(textoX+2, 202))
         escrever_tela(textoRecorde,(textoX, 200))
-        startButton = pygame.draw.rect(tela, branco, (425,620, larguraButtonStart, alturaButtonStart), border_radius=15)
-        startTexto = fonteMenu.render("Iniciar Game", True, preto)
-        textoX=500-startTexto.get_width()//2
-        escrever_tela(startTexto, (textoX,624))
-        escrever_tela(fundoDead, (0,0))
         pygame.display.update()
         relogio.tick(60)
 
@@ -195,23 +208,27 @@ def escrever_tela(mensagem,posicao):
     tela.blit(mensagem,posicao)
 
 def start():
-    nome_maior, maior_pontos, dataJogada = maior_pontuador()
-    larguraButtonStart = 150
-    alturaButtonStart  = 40
     larguraButtonStart = 150
     alturaButtonStart  = 40
     while True:
+        nome_maior, maior_pontos, dataJogada = maior_pontuador()
+        tela.fill(branco)
+        escrever_tela(fundoStart, (0,0))
+        startButton = pygame.draw.rect(tela, branco, (425,602, larguraButtonStart, alturaButtonStart), border_radius=15)
+        startTexto = fonteMenu.render("Iniciar Game", True, preto)
+        textoX=500-startTexto.get_width()//2
+        escrever_tela(startTexto, (textoX,611))
         for evento in pygame.event.get():
             if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
                 pygame.quit()
                 quit()
             if evento.type == pygame.QUIT:
+                pygame.quit()
                 quit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if startButton.collidepoint(evento.pos):
                     larguraButtonStart = 140
                     alturaButtonStart  = 35
-
             elif evento.type == pygame.MOUSEBUTTONUP:
                 # Verifica se o clique foi dentro do retângulo
                 if startButton.collidepoint(evento.pos):
@@ -219,9 +236,6 @@ def start():
                     larguraButtonStart = 150
                     alturaButtonStart  = 40
                     jogar()
-
-        tela.fill(branco)
-        escrever_tela(fundoStart, (0,0))
 
         fonteTitulo=pygame.font.SysFont("comicsans",40)
         sombraTitulo = fonteTitulo.render("Naruto: Sobrevivência Ninja", True, preto)
@@ -255,8 +269,8 @@ def start():
         escrever_tela(sombraDescricaoGame, (textoDescricaoX+2,292))
         escrever_tela(textoDescricaoGame,(textoDescricaoX,290))
         
-        textoDescricaoGame=fonteMenu.render(f"jogador: {nome_maior} - pontos: {maior_pontos}",True,branco)
-        sombraDescricaoGame = fonteMenu.render(f"jogador: {nome_maior} - pontos: {maior_pontos}",True,preto)
+        textoDescricaoGame=fonteMenu.render(f"Jogador: {nome_maior} - pontos: {maior_pontos}",True,branco)
+        sombraDescricaoGame = fonteMenu.render(f"Jogador: {nome_maior} - pontos: {maior_pontos}",True,preto)
         textoDescricaoX=500-textoDescricaoGame.get_width()//2
         escrever_tela(sombraDescricaoGame, (textoDescricaoX+2,320))
         escrever_tela(textoDescricaoGame,(textoDescricaoX,320))
@@ -267,13 +281,8 @@ def start():
         escrever_tela(sombraDescricaoGame, (textoDescricaoX+2,352))
         escrever_tela(textoDescricaoGame,(textoDescricaoX,350))
 
-        startButton = pygame.draw.rect(tela, branco, (425,602, larguraButtonStart, alturaButtonStart), border_radius=15)
-        startTexto = fonteMenu.render("Iniciar Game", True, preto)
-        textoX=500-startTexto.get_width()//2
-        escrever_tela(startTexto, (textoX,611))
         pygame.display.update()
         relogio.tick(60)
-        engine.say(f"Bem vindo(a) {nome}")
-        engine.runAndWait()
+        
 
 start()
