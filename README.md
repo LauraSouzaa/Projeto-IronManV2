@@ -29,6 +29,7 @@ Para gerar o executável do jogo:
 
 python setup.py build
 
-Para gerar o instalador MSI:
+Para gerar o instalador:
 
-python setup.py bdist_msi
+python setup.py bdist_msi ou python setup.py build
+
