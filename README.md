@@ -18,13 +18,13 @@ Tecnologias Utilizadas
 - JSON
 - CX_Freeze
 
-Como Executar:
+>> Como Executar:
 1. Instalar as dependências
 pip install pygame pyttsx3 cx_Freeze
 2. Executar o jogo
 python main.py
 
-Geração do Executável:
+>> Geração do Executável:
 
 Para gerar o executável do jogo, utilize o comando:
 
@@ -32,7 +32,7 @@ python setup.py build
 
 Após a execução, os arquivos gerados estarão disponíveis na pasta build.
 
-Geração do Instalador:
+>> Geração do Instalador:
 
 Para gerar o instalador do jogo, utilize:
 
