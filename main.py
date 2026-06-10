@@ -132,7 +132,7 @@ def jogar():
                 personagemPiscando = True
                 contadorPisca = 50
                 posicaoXpain = 800
-                posicaoYpainposicaoXpain = random.randint(320,520)
+                posicaoYpainposicaoXpain = random.randint(350,550)
         if vida <= 0:
             escreverDados(nome,pontos)
             dead()
@@ -153,14 +153,12 @@ def jogar():
 
 def dead():
     global engine
-    print("ENTROU NO DEAD")
     pygame.mixer.Sound.play(explosaoSound)
     pygame.mixer.music.stop()
     painSound.stop()
     pygame.time.wait(4000)
     painSound.stop()
     nome_maior, maior_pontos, _ = maior_pontuador()
-    print("RECORDE NA TELA FINAL:", nome_maior, maior_pontos)
     larguraButtonStart = 150
     alturaButtonStart  = 40
     explosaoSound.stop()

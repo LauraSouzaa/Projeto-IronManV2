@@ -1,0 +1,6 @@
+README.md
+setup.py
+Naruto_Sobrevivencia_Ninja.egg-info/PKG-INFO
+Naruto_Sobrevivencia_Ninja.egg-info/SOURCES.txt
+Naruto_Sobrevivencia_Ninja.egg-info/dependency_links.txt
+Naruto_Sobrevivencia_Ninja.egg-info/top_level.txt
