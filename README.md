@@ -14,8 +14,10 @@ Tecnologias Utilizadas:
 - JSON
 - CX_Freeze
 
-Como Executar
-Instale as dependências:
+Como Executar:
+
+
+-Instale as dependências:
 
 pip install pygame pyttsx3 cx_Freeze
 
