@@ -99,8 +99,10 @@ def jogar():
             posicaoXpain = posicaoXpain - velocidadepainposicaoXpain
         if posicaoXpain < -125:
             posicaoXpain = 800
-            posicaoYpainposicaoXpain = random.randint(350,550)
-            velocidadepainposicaoXpain = velocidadepainposicaoXpain + 1
+            posicaoYpainposicaoXpain = random.randint(
+            max(350, posicaoYPersona - 50),
+            min(550, posicaoYPersona + 50))
+            velocidadepainposicaoXpain += 1
             pontos += 1
         if posicaoNuvemX < -120:
             posicaoNuvemX = 1000
@@ -132,7 +134,9 @@ def jogar():
                 personagemPiscando = True
                 contadorPisca = 50
                 posicaoXpain = 800
-                posicaoYpainposicaoXpain = random.randint(350,550)
+                posicaoYpainposicaoXpain = random.randint(
+                max(350, posicaoYPersona - 50),
+                min(550, posicaoYPersona + 50))
         if vida <= 0:
             escreverDados(nome,pontos)
             dead()
