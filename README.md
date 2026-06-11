@@ -37,5 +37,3 @@ Para gerar o instalador do jogo, utilize:
 python setup.py bdist_msi
 
 O instalador será criado automaticamente na pasta de saída do projeto.
-
-Objetivo: sobreviver ao maior número possível de ataques, acumular pontos e superar o recorde armazenado pelo jogo. 🥷🔥
