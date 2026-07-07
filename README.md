@@ -1,7 +1,6 @@
 Laura Portella de Souza
-RA: 1139306
 
-Descrição do Jogo
+Descrição do Jogo:
 
 Naruto: Sobrevivência Ninja é um jogo desenvolvido em Python utilizando a biblioteca Pygame. Nele, o jogador controla Naruto e deve sobreviver aos ataques de Pain, desviando dos inimigos que atravessam a tela.
 
